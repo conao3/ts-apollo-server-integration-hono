@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/conao3/apollo-server-integration-hono.ts.git"
+    "url": "git+https://github.com/conao3/ts-apollo-server-integration-hono.git"
   },
   "keywords": [
     "apollo",
