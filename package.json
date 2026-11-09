@@ -1,6 +1,6 @@
 {
   "name": "@conao3/apollo-server-integration-hono",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Apollo Server integration for Hono",
   "license": "Apache-2.0",
   "repository": {
