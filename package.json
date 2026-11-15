@@ -36,16 +36,16 @@
     "hono": "^4.0.0"
   },
   "devDependencies": {
-    "@apollo/server": "^5.5.1",
-    "@apollo/server-integration-testsuite": "^5.5.1",
-    "@hono/node-server": "^2.1.6",
+    "@apollo/server": "^5.5.2",
+    "@apollo/server-integration-testsuite": "^5.5.2",
+    "@hono/node-server": "^2.1.8",
     "@jest/globals": "^30.5.2",
     "@swc/core": "^1.16.22",
     "@swc/jest": "^0.2.39",
     "@types/node": "^26.6.6",
     "graphql": "^16.15.0",
-    "hono": "^4.13.17",
+    "hono": "^4.13.18",
     "jest": "^30.5.2",
-    "vite-plus": "1.5.0"
+    "vite-plus": "1.6.0"
   }
 }
