@@ -11,3 +11,5 @@ overrides:
   "@graphql-tools/utils@<12.0.2": ^12.1.0
   minimatch@9: ^11.0.1
   minimatch@10: ^11.0.1
+minimumReleaseAgeExclude:
+  - hono@4.13.20
