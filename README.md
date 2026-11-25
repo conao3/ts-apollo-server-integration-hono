@@ -12,10 +12,10 @@
 </p>
 
 <p align="center">
-  <a href="#install">Install</a> ·
-  <a href="#usage">Usage</a> ·
-  <a href="#context">Context</a> ·
-  <a href="#development">Development</a> ·
+  <a href="#install">Install</a> |
+  <a href="#usage">Usage</a> |
+  <a href="#context">Context</a> |
+  <a href="#development">Development</a> |
   <a href="https://www.npmjs.com/package/@conao3/apollo-server-integration-hono">npm</a>
 </p>
 
