@@ -116,7 +116,7 @@ A maintainer releases from `master` with one manual run of `release.yml`. Choose
 gh workflow run release.yml --ref master -f version_bump=patch
 ```
 
-The run bumps `version` in `package.json`, runs the checks, pushes the version commit to `master` with the annotated tag `v<version>`, publishes the package to npm with provenance through npm trusted publishing, and creates the GitHub Release. If a job after the tag push fails, re-run the failed jobs of the same run. `version` in `package.json` on `master` stays at the latest version published to npm.
+The run bumps `version` in `package.json`, packs the package, pushes the version commit to `master` with the annotated tag `v<version>`, publishes the package to npm with provenance through npm trusted publishing, and creates the GitHub Release. If a job after the tag push fails, re-run the failed jobs of the same run. `version` in `package.json` on `master` stays at the latest version published to npm.
 
 ## License
 

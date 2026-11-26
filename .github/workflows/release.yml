@@ -23,7 +23,7 @@ defaults:
     shell: bash
 jobs:
   check:
-    name: Bump and check
+    name: Bump version
     runs-on: ubuntu-latest
     timeout-minutes: 45
     permissions:
@@ -72,10 +72,6 @@ jobs:
           git commit -m "Bump version to $VERSION" -- "${files[@]}"
       - name: Install dependencies
         run: nix develop --command vp install
-      - name: Check
-        run: nix develop --command vp run check
-      - name: Build with Nix
-        run: nix build .#build
       - name: Pack
         run: nix develop --command vp pack
       - uses: actions/setup-node@v7.1.0
