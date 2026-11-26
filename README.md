@@ -16,6 +16,7 @@
   <a href="#usage">Usage</a> |
   <a href="#context">Context</a> |
   <a href="#development">Development</a> |
+  <a href="#release">Release</a> |
   <a href="https://www.npmjs.com/package/@conao3/apollo-server-integration-hono">npm</a>
 </p>
 
@@ -106,6 +107,16 @@ Unit tests in `test/unit/` run on Vitest. The Apollo Server integration test sui
 The suite skips its incremental delivery tests unless you set `INCREMENTAL_DELIVERY_TESTS_ENABLED`, and those tests need graphql 17. To run them, set `graphql: 17.0.0-alpha.9` in `overrides` of `pnpm-workspace.yaml` and run `INCREMENTAL_DELIVERY_TESTS_ENABLED=1 jest -t "modern incremental format|with defer modern"`.
 
 When `pnpm-lock.yaml` changes, update `hash` in `flake.nix` (set it to `pkgs.lib.fakeHash`, run `nix build .#build`, and use the `got:` value).
+
+## Release
+
+A maintainer releases from `master` with one manual run of `release.yml`. Choose `patch`, `minor` or `major`:
+
+```sh
+gh workflow run release.yml --ref master -f version_bump=patch
+```
+
+The run bumps `version` in `package.json`, runs the checks, pushes the version commit to `master` with the annotated tag `v<version>`, publishes the package to npm with provenance through npm trusted publishing, and creates the GitHub Release. If a job after the tag push fails, re-run the failed jobs of the same run. `version` in `package.json` on `master` stays at the latest version published to npm.
 
 ## License
 
