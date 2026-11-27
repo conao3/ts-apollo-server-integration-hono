@@ -40,7 +40,7 @@ jobs:
       - uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
-      - uses: cachix/install-nix-action@v32.0.0
+      - uses: cachix/install-nix-action@v32.1.0
       - name: Choose version
         id: version
         env:
@@ -139,7 +139,7 @@ jobs:
         with:
           ref: v${{ needs.check.outputs.version }}
           persist-credentials: false
-      - uses: cachix/install-nix-action@v32.0.0
+      - uses: cachix/install-nix-action@v32.1.0
       - run: nix develop --command vp install
       - run: nix develop --command vp pack
       - uses: actions/setup-node@v7.1.0
