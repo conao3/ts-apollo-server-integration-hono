@@ -36,7 +36,7 @@ export default defineConfig({
   ],
   run: {
     tasks: {
-      check: { command: "vp check && vp test && jest" },
+      check: { command: "vp check && vp test && jest", cache: { untrackedEnv: ["TSRS_BINARY"] } },
     },
   },
 } satisfies ViteUserConfig)

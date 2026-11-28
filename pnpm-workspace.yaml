@@ -7,6 +7,15 @@ allowBuilds:
 runtimeOnFail: ignore
 pmOnFail: ignore
 
+supportedArchitectures:
+  os:
+    - current
+  cpu:
+    - current
+  libc:
+    - current
+    - musl
+
 overrides:
   "@graphql-tools/utils@<12.0.2": ^12.1.0
   minimatch@9: ^11.0.1

@@ -52,6 +52,16 @@
               fi
 
               export PATH="${nodejs}/bin:$workspace_root/node_modules/.bin:$PATH"
+            ''
+            + pkgs.lib.optionalString pkgs.stdenv.hostPlatform.isLinux ''
+              tsrs_static="$workspace_root/node_modules/.pnpm/node_modules/@tsrs/linux-${
+                if pkgs.stdenv.hostPlatform.isAarch64 then "arm64" else "x64"
+              }-musl/tsrs"
+              if [[ -z "''${TSRS_BINARY:-}" && -x "$tsrs_static" ]]; then
+                export TSRS_BINARY="$tsrs_static"
+              fi
+            ''
+            + ''
               exec ${nodejs}/bin/node "$vp_cli" "$@"
             '';
           };
