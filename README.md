@@ -15,6 +15,7 @@
   <a href="#install">Install</a> |
   <a href="#usage">Usage</a> |
   <a href="#context">Context</a> |
+  <a href="#incremental-delivery">Incremental delivery</a> |
   <a href="#development">Development</a> |
   <a href="#release">Release</a> |
   <a href="https://www.npmjs.com/package/@conao3/apollo-server-integration-hono">npm</a>
@@ -34,10 +35,17 @@ It passes the whole `@apollo/server-integration-testsuite`, including incrementa
 ## Install
 
 ```sh
-pnpm add @conao3/apollo-server-integration-hono @apollo/server graphql hono
+pnpm add @conao3/apollo-server-integration-hono @apollo/server graphql@16 hono
 ```
 
-The package needs `@apollo/server` 5, `hono` 4 and Node.js 20 or later.
+The package needs `@apollo/server` 5, `hono` 4 and Node.js 20 or later. Apollo Server 5 needs graphql 16, so install `graphql@16`. `pnpm add graphql` without a version installs graphql 17. On Node.js, also install `@hono/node-server` to run the example below.
+
+pnpm 12 ends `pnpm add` with an error until you decide which dependencies may run build scripts. Apollo Server works without the build script of `@apollo/protobufjs`, so turn it off in `pnpm-workspace.yaml`:
+
+```yaml
+allowBuilds:
+  "@apollo/protobufjs": false
+```
 
 ## Usage
 
@@ -91,6 +99,20 @@ app.post(
 
 Headers that middleware sets on the Hono context (for example `hono/cors`) stay on the GraphQL response.
 
+### Incremental delivery
+
+Apollo Server 5.1 and later send `@defer` and `@stream` results in parts only with graphql `17.0.0-alpha.9`, as the [Apollo Server docs](https://www.apollographql.com/docs/apollo-server/workflow/requests#incremental-delivery-experimental) say. Install that version and declare the directive in your schema:
+
+```sh
+pnpm add graphql@17.0.0-alpha.9
+```
+
+```graphql
+directive @defer(if: Boolean! = true, label: String) on FRAGMENT_SPREAD | INLINE_FRAGMENT
+```
+
+A client that sends `accept: multipart/mixed; incrementalSpec=v0.2, application/json` then gets a `multipart/mixed` response, and the handler streams each part as soon as Apollo Server produces it.
+
 ## Development
 
 ```sh
@@ -104,7 +126,12 @@ nix run              # starts the example server at http://localhost:4000/api/gr
 
 Unit tests in `test/unit/` run on Vitest. The Apollo Server integration test suite in `test/integration/` runs on Jest, which the suite requires.
 
-The suite skips its incremental delivery tests unless you set `INCREMENTAL_DELIVERY_TESTS_ENABLED`, and those tests need graphql 17. To run them, set `graphql: 17.0.0-alpha.9` in `overrides` of `pnpm-workspace.yaml` and run `INCREMENTAL_DELIVERY_TESTS_ENABLED=1 jest -t "modern incremental format|with defer modern"`.
+The suite skips its 24 incremental delivery tests unless you set `INCREMENTAL_DELIVERY_TESTS_ENABLED`, and those tests need graphql 17. To run all 270 tests, set `graphql: 17.0.0-alpha.9` in `overrides` of `pnpm-workspace.yaml`, install `@yaacovcr/transform`, which the tests of the legacy `@defer` format load, and run jest with the variable:
+
+```sh
+pnpm add -D @yaacovcr/transform
+INCREMENTAL_DELIVERY_TESTS_ENABLED=1 jest
+```
 
 When `pnpm-lock.yaml` changes, update `hash` in `flake.nix` (set it to `pkgs.lib.fakeHash`, run `nix build .#build`, and use the `got:` value).
 
